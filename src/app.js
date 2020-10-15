@@ -35,7 +35,7 @@ app.get('/about', (req, res) => {
 
 app.get('/help', (req, res) => {
     res.render('help', {
-        helpText: 'This is some helpful text.',
+        helpText: 'Uisng this app you can have some knowledge about weather condition with current data.',
         title: 'Help',
         name: 'kamlesh suthar'
     })
@@ -52,15 +52,20 @@ app.get('/weather', (req, res) => {
         if (error) {
             return res.send({ error })
         }
-        forecast(longitude, latitude, (error, forecastData) => {
+        forecast(longitude, latitude, (error,description,tempreture,precip,humidity,wind_dir,wind_spped) => {
             if (error) {
                 return res.send({ error })
             }
 
             res.send({
-                forecast: forecastData,
-                location,
-                address: req.query.address
+                description:"Weather Type: "+description,
+                tempreture: "Temperature: "+tempreture,
+                precip:"Probability of Rain: "+precip,
+                humidity:"Humidity: "+humidity,
+                wind_dir:"Wind Direction: "+wind_dir,
+                wind_spped:"Wind Speed: "+wind_spped,
+                location:"Location: "+location,
+                address: "Address: "+req.query.address
             })
         })
     })
